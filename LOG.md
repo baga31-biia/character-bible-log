@@ -126,6 +126,12 @@ Ukur acuan baru: detail 6.99, sebaran 19.2, satur 0.32, R/G 1.32 (lebih netral d
 | J s3501 (CB-v3-01) | crop kepala-bahu acuan → perbesar 880x1184 → Kontext denoise 1.0, prompt "add fine strands" | Warna & bentuk pas, tapi helai kusut seperti basah (detail 10.9) & framing terpotong. Ditolak |
 | J2 s3502 | sama, denoise 0.45, prompt "keep identical" | Bentuk, panjang, ujung, framing & warna (satur 0.29, R/G 1.29) sesuai acuan; sedikit lebih halus. KANDIDAT |
 
+### Revisi rambut sudut samping (v3)
+- J2 belakang **DIKUNCI** (disetujui user). Folder PC: `Downloads/ComfyUI/CHARACTER_BIBLE_FIX/` (0_ACUAN, 1_FIX, 3_PERLU_REVISI_rambut, STATUS.txt).
+- ¾ kanan: user menilai wajah tidak mirip → buat ulang wajah + rambut.
+- ¾ kiri K s3601 (Kontext edit, acuan1 = ¾ kiri, acuan2 = J2): wajah ikut berubah (0.717→0.669). Ditolak.
+- ¾ kiri K3 s3611 (CB-v3-02): **inpaint hanya area rambut** (mask dibuat di browser dari piksel rambut, wajah = poligon 106 landmark dilindungi), acuan rambut J2 via ReferenceLatent, tempel balik → piksel wajah 100% asli. Rambut sebahu berlapis, ujung keluar; sedikit lebih bergelombang & hangat dari J2; anting tertutup rambut. Menunggu penilaian user.
+
 ## Aturan ukur (mulai sekarang)
 - Selalu dibandingkan dengan **foto depan (jangkar)**, bukan hanya sudut tetangga.
 - Panjang rambut (ukur_rambut.py) harus ≥ 99% jangkar (≈ 890px), ujung berlapis & mengembang keluar.
