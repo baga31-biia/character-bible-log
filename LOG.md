@@ -117,6 +117,15 @@ Kesimpulan H: prompt tekstur & acuan final hampir tidak berpengaruh — Kontext 
 
 O16: Sel penjaga (heartbeat loop) ditambahkan di akhir notebook: sesi Kaggle mati tiap kali ComfyUI selesai & kernel idle.
 
+### Arah baru rambut (keputusan user, 27 Nov 15:38)
+I1 (inpaint panjang, CB-v2-07a) dinilai buruk oleh user. **Acuan rambut baru untuk belakang, kiri, kanan = `turnaround_belakang.png`** (sebahu, berlapis, ujung melengkung keluar, coklat netral). Tampak depan tetap.
+Ukur acuan baru: detail 6.99, sebaran 19.2, satur 0.32, R/G 1.32 (lebih netral dari acuan final).
+
+| Versi | Teknik | Hasil |
+|---|---|---|
+| J s3501 (CB-v3-01) | crop kepala-bahu acuan → perbesar 880x1184 → Kontext denoise 1.0, prompt "add fine strands" | Warna & bentuk pas, tapi helai kusut seperti basah (detail 10.9) & framing terpotong. Ditolak |
+| J2 s3502 | sama, denoise 0.45, prompt "keep identical" | Bentuk, panjang, ujung, framing & warna (satur 0.29, R/G 1.29) sesuai acuan; sedikit lebih halus. KANDIDAT |
+
 ## Aturan ukur (mulai sekarang)
 - Selalu dibandingkan dengan **foto depan (jangkar)**, bukan hanya sudut tetangga.
 - Panjang rambut (ukur_rambut.py) harus ≥ 99% jangkar (≈ 890px), ujung berlapis & mengembang keluar.
