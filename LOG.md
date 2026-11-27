@@ -92,6 +92,17 @@ Alat ukur baru `tools/ukur_rambut.py`: panjang rambut = baris piksel rambut (cok
 
 O14: Kaggle mematikan sesi saat idle ("Are you still there?") di tengah sampling → dipasang skrip keepalive di tab Kaggle yang otomatis klik "Continue editing".
 
+### Percobaan memperbaiki ujung rambut s3221 (belum berhasil)
+| Versi | Teknik | Hasil |
+|---|---|---|
+| G3 (s3241/3251, CB-v2-06c) | Kontext edit seluruh gambar, acuan = s3221 | Ujung hampir tak berubah; framing membesar → panjang turun ke 857px (95%). Ditolak |
+| G4 (s3261/3271, CB-v2-06d) | Inpaint mask area ujung, denoise 0.75, tempel balik | Perubahan rata-rata 0.6/255 di area ujung → praktis identik. Ditolak |
+| G5 (s3281/3291, CB-v2-06e) | Mask diperluas ke bawah, denoise 0.95, prompt "outward flip" | Perubahan 0.9/255 → identik. Ditolak |
+
+Diagnosis: ReferenceLatent memakai gambar yang sama dengan yang di-inpaint, sehingga Kontext menyalin ulang ujung lama apa pun promptnya. Perbaikan berikutnya: acuan diganti (mis. jangkar depan yang ujungnya mengembang) atau inpaint tanpa ReferenceLatent.
+
+O15: Simulasi aktivitas berkala di tab Kaggle (tombol "Continue editing" ternyata muncul setelah sesi berhenti, jadi auto-klik saja tidak mencegah).
+
 ## Aturan ukur (mulai sekarang)
 - Selalu dibandingkan dengan **foto depan (jangkar)**, bukan hanya sudut tetangga.
 - Panjang rambut (ukur_rambut.py) harus ≥ 99% jangkar (≈ 890px), ujung berlapis & mengembang keluar.
