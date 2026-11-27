@@ -1,0 +1,252 @@
+{
+  "1": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "jangkar_depan_turtleneck_s2001.png"
+    },
+    "_meta": {
+      "title": "Acuan 1: Jangkar Depan"
+    }
+  },
+  "41": {
+    "class_type": "ImageFlip",
+    "inputs": {
+      "image": [
+        "1",
+        0
+      ],
+      "flip_method": "y-axis: horizontally"
+    },
+    "_meta": {
+      "title": "Sandwich 1: balik jangkar"
+    }
+  },
+  "2": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "flux1-dev-kontext_fp8_scaled.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "3": {
+    "class_type": "DualCLIPLoader",
+    "inputs": {
+      "clip_name1": "clip_l.safetensors",
+      "clip_name2": "t5xxl_fp8_e4m3fn.safetensors",
+      "type": "flux",
+      "device": "cpu"
+    },
+    "_meta": {
+      "title": "Text encoder di CPU"
+    }
+  },
+  "4": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "flux-vae-bf16.safetensors"
+    }
+  },
+  "5": {
+    "class_type": "FluxKontextImageScale",
+    "inputs": {
+      "image": [
+        "41",
+        0
+      ]
+    }
+  },
+  "7": {
+    "class_type": "VAEEncode",
+    "inputs": {
+      "pixels": [
+        "5",
+        0
+      ],
+      "vae": [
+        "4",
+        0
+      ]
+    }
+  },
+  "8": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "acuan_wajah_final.png"
+    },
+    "_meta": {
+      "title": "Acuan 2: Wajah Final"
+    }
+  },
+  "20": {
+    "class_type": "ImageCrop",
+    "inputs": {
+      "image": [
+        "8",
+        0
+      ],
+      "width": 1071,
+      "height": 900,
+      "x": 0,
+      "y": 0
+    },
+    "_meta": {
+      "title": "Potong acuan sampai leher"
+    }
+  },
+  "42": {
+    "class_type": "ImageFlip",
+    "inputs": {
+      "image": [
+        "20",
+        0
+      ],
+      "flip_method": "y-axis: horizontally"
+    },
+    "_meta": {
+      "title": "Sandwich 1: balik acuan"
+    }
+  },
+  "9": {
+    "class_type": "FluxKontextImageScale",
+    "inputs": {
+      "image": [
+        "42",
+        0
+      ]
+    }
+  },
+  "6": {
+    "class_type": "VAEEncode",
+    "inputs": {
+      "pixels": [
+        "9",
+        0
+      ],
+      "vae": [
+        "4",
+        0
+      ]
+    }
+  },
+  "100": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "Rotate the camera to a full side profile: her head and shoulders turned 90 degrees so she faces the left side of the image, only one side of her face visible. Keep the exact same woman with an identical face: same facial features and proportions, same eyes, eyelids, eyebrows, nose, lips, jawline and face shape, same youthful age, same skin tone, same hairstyle and hair color, same small stud earrings, same dark navy knit turtleneck sweater, neutral relaxed expression. Close-up head and shoulders portrait, same plain light grey background, same soft even studio lighting. Natural realistic skin with subtle visible pores, matte finish, no glow, no shine, no added wrinkles.",
+      "clip": [
+        "3",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Prompt Profil (diputar ke kiri, lalu dibalik)"
+    }
+  },
+  "101": {
+    "class_type": "ReferenceLatent",
+    "inputs": {
+      "conditioning": [
+        "100",
+        0
+      ],
+      "latent": [
+        "7",
+        0
+      ]
+    }
+  },
+  "102": {
+    "class_type": "ReferenceLatent",
+    "inputs": {
+      "conditioning": [
+        "101",
+        0
+      ],
+      "latent": [
+        "6",
+        0
+      ]
+    }
+  },
+  "103": {
+    "class_type": "FluxGuidance",
+    "inputs": {
+      "guidance": 2.5,
+      "conditioning": [
+        "102",
+        0
+      ]
+    }
+  },
+  "104": {
+    "class_type": "ConditioningZeroOut",
+    "inputs": {
+      "conditioning": [
+        "100",
+        0
+      ]
+    }
+  },
+  "105": {
+    "class_type": "KSampler",
+    "inputs": {
+      "seed": 3004,
+      "steps": 20,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "2",
+        0
+      ],
+      "positive": [
+        "103",
+        0
+      ],
+      "negative": [
+        "104",
+        0
+      ],
+      "latent_image": [
+        "7",
+        0
+      ]
+    }
+  },
+  "106": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "105",
+        0
+      ],
+      "vae": [
+        "4",
+        0
+      ]
+    }
+  },
+  "107": {
+    "class_type": "ImageFlip",
+    "inputs": {
+      "image": [
+        "106",
+        0
+      ],
+      "flip_method": "y-axis: horizontally"
+    },
+    "_meta": {
+      "title": "Sandwich 2: balik kembali -> menghadap kanan"
+    }
+  },
+  "108": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "filename_prefix": "bible_v2/D_profil_kanan_s3004",
+      "images": [
+        "107",
+        0
+      ]
+    }
+  }
+}
