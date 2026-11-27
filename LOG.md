@@ -63,7 +63,9 @@ Rotate the camera clearly to a three-quarter view: her head and shoulders turned
 | Profil kanan (sandwich, s3004) | 0.571 | 0.540 | +49° | KUNCI |
 | Profil kiri (C2, s3003) | 0.477 | 0.389 | −61° | **DICABUT** — bentuk wajah/rahang bergeser (dikoreksi user); kesalahan: dulu diukur vs ¾ kiri, bukan vs depan |
 | **Profil kiri (F, s3103)** — acuan 1 = ¾ kiri terkunci (langkah kecil) + acuan wajah final | **0.576** | – | −57° | **KUNCI** (pengganti). s3113 ditolak: menghadap kanan |
-| **Belakang kepala (G, s3211)** — acuan 1 = profil kiri terkunci, acuan 2 = jangkar depan | n/a (wajah tak terlihat) | – | 180° | **KUNCI** — warna rambut hue 14° vs jangkar 16°, sisi belah tampak (volume lebih di satu sisi). s3201 cadangan: simetris, belahan kurang terlihat |
+| Belakang kepala (G, s3211/s3201) | n/a | – | 180° | **DICABUT** (koreksi user): panjang rambut 743px vs jangkar 899px = 83%, ujung rata seperti bob |
+| Belakang kepala v2 (G2, s3221) — prompt panjang + ujung berlapis | panjang 885px = **98.4%** | – | 180° | KANDIDAT — ujung sedikit meruncing tapi belum mengembang keluar seperti depan |
+| Belakang kepala v2 (G2, s3231) | panjang 834px = 92.8% | – | 180° | ditolak: terlalu pendek (ujung mengembang sudah bagus) |
 
 ### Prompt profil kiri versi F
 ```
@@ -82,8 +84,17 @@ Rotate the camera to a view from directly behind her: we see the back of her hea
 ```
 Ukur sudut belakang: ArcFace tidak bisa (tanpa wajah) → dipakai warna rambut (hue/saturasi piksel gelap) vs jangkar + cek visual panjang/belahan. Catatan: ujung rambut belakang lebih rata (bob) dibanding ujung berlapis di depan.
 
+### Prompt belakang kepala versi G2 (workflow CB-v2-06b-BelakangKepala-Panjang)
+```
+Rotate the camera to a view from directly behind her: we see the back of her head and shoulders, her face is not visible at all. Her hair is exactly as long as in the reference image: it falls well past her shoulders down onto her upper back, the hair ends reaching the middle of the shoulder blades, far below the top of the shoulders. The hair ends are softly layered and feathered with uneven tapered tips that flick slightly outward, exactly like the reference, not a blunt straight-cut bob. Keep the exact same woman: same hairstyle, same dark brown hair color, same volume and side part, same dark navy knit turtleneck sweater, same body proportions. Head and shoulders framing, same plain light grey background, same soft even studio lighting. Photorealistic, natural hair texture, no glow.
+```
+Alat ukur baru `tools/ukur_rambut.py`: panjang rambut = baris piksel rambut (coklat, R>B+12) teratas s/d terbawah. Jangkar 899px; semua sudut terkunci 898–901px. Target ≥ 99%.
+
+O14: Kaggle mematikan sesi saat idle ("Are you still there?") di tengah sampling → dipasang skrip keepalive di tab Kaggle yang otomatis klik "Continue editing".
+
 ## Aturan ukur (mulai sekarang)
 - Selalu dibandingkan dengan **foto depan (jangkar)**, bukan hanya sudut tetangga.
+- Panjang rambut (ukur_rambut.py) harus ≥ 99% jangkar (≈ 890px), ujung berlapis & mengembang keluar.
 - Ambang awal per sudut (vs jangkar): 15–30° ≥ 0.70, 45° ≥ 0.60, 60–90° ≥ 0.50, plus cek rasio rahang.
 
 ## Rencana berikutnya
