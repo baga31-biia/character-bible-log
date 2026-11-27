@@ -132,6 +132,14 @@ Ukur acuan baru: detail 6.99, sebaran 19.2, satur 0.32, R/G 1.32 (lebih netral d
 - ¾ kiri K s3601 (Kontext edit, acuan1 = ¾ kiri, acuan2 = J2): wajah ikut berubah (0.717→0.669). Ditolak.
 - ¾ kiri K3 s3611 (CB-v3-02): **inpaint hanya area rambut** (mask dibuat di browser dari piksel rambut, wajah = poligon 106 landmark dilindungi), acuan rambut J2 via ReferenceLatent, tempel balik → piksel wajah 100% asli. Rambut sebahu berlapis, ujung keluar; sedikit lebih bergelombang & hangat dari J2; anting tertutup rambut. Menunggu penilaian user.
 
+### Evaluasi user 27 Nov 16:22 — K dan K3 sama-sama GAGAL
+Koreksi user: prompt terlalu panjang & mendeskripsikan rambut ("ujung curly", dst.) padahal tujuannya hanya **memindahkan rambut dari gambar acuan ke gambar yang diubah**.
+Aturan prompt ganti rambut berikutnya:
+- Prompt pendek, tanpa deskripsi gaya/warna rambut (rambut ditentukan oleh gambar acuan, bukan teks).
+- Isi prompt: ganti rambut dengan rambut pada gambar acuan; pertahankan SEMUA hal lain pada gambar yang diubah (wajah, pose, sudut, telinga & anting, baju, latar, cahaya).
+- Contoh: `Replace only her hair with the exact hair from the reference image. Keep everything else in the image unchanged.`
+Pekerjaan dihentikan; lanjut malam ini. Notebook Kaggle: sel penjaga (heartbeat) ada di draft, belum Quick Save versi baru. Catatan teknis: Cancel Run mematikan ComfyUI & tunnel (satu grup proses) → jalankan keduanya dengan `start_new_session=True` (perlu dimasukkan ke sel 2).
+
 ## Aturan ukur (mulai sekarang)
 - Selalu dibandingkan dengan **foto depan (jangkar)**, bukan hanya sudut tetangga.
 - Panjang rambut (ukur_rambut.py) harus ≥ 99% jangkar (≈ 890px), ujung berlapis & mengembang keluar.
