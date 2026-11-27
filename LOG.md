@@ -63,6 +63,7 @@ Rotate the camera clearly to a three-quarter view: her head and shoulders turned
 | Profil kanan (sandwich, s3004) | 0.571 | 0.540 | +49° | KUNCI |
 | Profil kiri (C2, s3003) | 0.477 | 0.389 | −61° | **DICABUT** — bentuk wajah/rahang bergeser (dikoreksi user); kesalahan: dulu diukur vs ¾ kiri, bukan vs depan |
 | **Profil kiri (F, s3103)** — acuan 1 = ¾ kiri terkunci (langkah kecil) + acuan wajah final | **0.576** | – | −57° | **KUNCI** (pengganti). s3113 ditolak: menghadap kanan |
+| **Belakang kepala (G, s3211)** — acuan 1 = profil kiri terkunci, acuan 2 = jangkar depan | n/a (wajah tak terlihat) | – | 180° | **KUNCI** — warna rambut hue 14° vs jangkar 16°, sisi belah tampak (volume lebih di satu sisi). s3201 cadangan: simetris, belahan kurang terlihat |
 
 ### Prompt profil kiri versi F
 ```
@@ -75,11 +76,17 @@ Rotate the camera further to a full side profile: her head and shoulders turned 
 - ¾ kanan s3002: hanya menoleh 19° (skor 0.693 tapi putaran kurang)
 - ¾ kanan s3022: 0.538
 
+### Prompt belakang kepala versi G (workflow CB-v2-06-BelakangKepala)
+```
+Rotate the camera to a view from directly behind her: we see the back of her head and shoulders, her hair falling from behind, the back of the turtleneck collar, her face is not visible at all. Keep the exact same woman: same hairstyle, same shoulder-length dark brown hair with the same length, color, volume and side part, same dark navy knit turtleneck sweater, same body proportions. Head and shoulders framing, same plain light grey background, same soft even studio lighting. Photorealistic, natural hair texture, no glow.
+```
+Ukur sudut belakang: ArcFace tidak bisa (tanpa wajah) → dipakai warna rambut (hue/saturasi piksel gelap) vs jangkar + cek visual panjang/belahan. Catatan: ujung rambut belakang lebih rata (bob) dibanding ujung berlapis di depan.
+
 ## Aturan ukur (mulai sekarang)
 - Selalu dibandingkan dengan **foto depan (jangkar)**, bukan hanya sudut tetangga.
 - Ambang awal per sudut (vs jangkar): 15–30° ≥ 0.70, 45° ≥ 0.60, 60–90° ≥ 0.50, plus cek rasio rahang.
 
 ## Rencana berikutnya
-1. Ulang profil kiri dari ¾ kiri (langkah kecil), ukur vs jangkar.
-2. Workflow dimuat ke kanvas ComfyUI (format UI) agar terlihat.
+1. Menoleh ke belakang lewat bahu kanan, lalu bahu kiri (satu per satu, tunggu instruksi user).
+2. Ekspresi: senyum, sedih ingin menangis, marah tegas, terkejut.
 3. Kumpulkan 15–25 gambar terkunci → latih LoRA karakter.
