@@ -21,6 +21,10 @@ Skor identitas = kemiripan wajah ArcFace (insightface buffalo_l, 0–1). Pemband
 | O7 | **`--disable-dynamic-vram`** saat menjalankan ComfyUI | Akar masalah macet: fitur dynamic VRAM (comfy-aimdo) membuat proses diam (CPU 3%) saat memuat model | Tidak macet lagi |
 | O8 | Tunnel cloudflared di background + link dicetak | Kernel bebas → Console bisa dipakai saat ComfyUI berjalan | Diagnosa & perbaikan tanpa restart sesi |
 | O9 | Dataset Kaggle "Alat Ukur Wajah" (wheel insightface + ukur.py), dipasang SEBELUM ComfyUI menyala | Ukur langsung di Kaggle; pip saat ComfyUI berjalan berisiko | Notebook versi #6 |
+| O10 | **Panaskan model**: baca T5, CLIP, VAE berurutan (`cat ... > /dev/null`) sebelum ComfyUI | Akar masalah macet yang sebenarnya: di sesi baru Kaggle mengunduh isi dataset secara malas (lazy); ComfyUI membaca acak per potongan → sangat lambat/diam. Terbukti: saat file dibaca berurutan dari Console, ComfyUI langsung lanjut | Notebook versi #7 |
+| O11 | Dataset Wan 2.1 (23,5 GB) dilepas dari notebook Character Bible | Tidak dipakai; memperlambat mulai sesi | Mulai sesi lebih cepat |
+| O12 | Sel alat ukur pakai path pasti (bukan `$(find ...)`) | `$(...)` tidak terproses di sel Jupyter | Notebook versi #7 |
+| O13 | Workflow dimuat ke kanvas ComfyUI + disimpan format kanvas (`workflows_kanvas/`), workflow tertanam di PNG hasil | User perlu melihat workflow | Menu Workflows ComfyUI berisi CB-v2-01..05 |
 
 ## Prompt yang dipakai
 
@@ -58,6 +62,12 @@ Rotate the camera clearly to a three-quarter view: her head and shoulders turned
 | ¾ kanan (sandwich, s3012) | 0.645 | 0.628 | +34° | KUNCI |
 | Profil kanan (sandwich, s3004) | 0.571 | 0.540 | +49° | KUNCI |
 | Profil kiri (C2, s3003) | 0.477 | 0.389 | −61° | **DICABUT** — bentuk wajah/rahang bergeser (dikoreksi user); kesalahan: dulu diukur vs ¾ kiri, bukan vs depan |
+| **Profil kiri (F, s3103)** — acuan 1 = ¾ kiri terkunci (langkah kecil) + acuan wajah final | **0.576** | – | −57° | **KUNCI** (pengganti). s3113 ditolak: menghadap kanan |
+
+### Prompt profil kiri versi F
+```
+Rotate the camera further to a full side profile: her head and shoulders turned another 45 degrees toward the left side of the image, so she faces the left edge in a clean 90 degree profile, only one side of her face visible. + KEEP
+```
 
 ### Ditolak (ringkas)
 - Uji awal 1 acuan: ¾ kanan & profil kanan salah arah (Kontext memutar ke kiri)
