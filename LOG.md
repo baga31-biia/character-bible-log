@@ -103,6 +103,20 @@ Diagnosis: ReferenceLatent memakai gambar yang sama dengan yang di-inpaint, sehi
 
 O15: Simulasi aktivitas berkala di tab Kaggle (tombol "Continue editing" ternyata muncul setelah sesi berhenti, jadi auto-klik saja tidak mencegah).
 
+### Evaluasi tekstur rambut (koreksi user, 27 Nov)
+Rambut harus seperti acuan final: tipis-ringan, sedikit messy, ada flyaway, ujung runcing lentik ke luar (lihat profil kiri), tidak tebal/smooth/kilap iklan. Alat baru `tools/ukur_tekstur.py`.
+
+| Gambar | detail helai | variasi terang | saturasi | R/G | panjang (ujung di bawah bahu) |
+|---|---|---|---|---|---|
+| Acuan final | 6.87 | 38.0 | 0.44 | 1.61 | – |
+| Profil kiri | 7.47 | 28.8 | 0.62 | 2.03 | 0.053 |
+| G2 s3221 | 4.78 | 11.7 | 0.74 | 2.32 | 0.028 |
+| H s3301/3311/3321 (CB-v2-06f: acuan 2 = acuan final asli + prompt tekstur eksplisit) | 4.9–5.2 | 11–13 | 0.73–0.75 | 2.36–2.47 | 0.015–0.023 |
+
+Kesimpulan H: prompt tekstur & acuan final hampir tidak berpengaruh — Kontext untuk tampak belakang selalu jatuh ke gaya "rambut iklan" (tebal, licin, kemerahan). Drift juga terlihat bertahap di rantai acuan→jangkar→profil.
+
+O16: Sel penjaga (heartbeat loop) ditambahkan di akhir notebook: sesi Kaggle mati tiap kali ComfyUI selesai & kernel idle.
+
 ## Aturan ukur (mulai sekarang)
 - Selalu dibandingkan dengan **foto depan (jangkar)**, bukan hanya sudut tetangga.
 - Panjang rambut (ukur_rambut.py) harus ≥ 99% jangkar (≈ 890px), ujung berlapis & mengembang keluar.
